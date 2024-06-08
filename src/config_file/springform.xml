@@ -1,0 +1,191 @@
+<config>
+
+    <methods>
+        <List>GET</List>
+        <Insert>POST</Insert>
+    </methods>
+    <util>
+        <extension>.js</extension>
+        <url>http://localhost:8080/#CLASS_NAME_2#s</url>
+        <insertUrl>http://localhost:8080/#CLASS_NAME_2#s</insertUrl>
+        <dossier>views</dossier>
+        <listLink>/</listLink>
+    </util>
+    <type>
+        <String>text</String>
+        <Date>date</Date>
+        <Integer>number</Integer>
+        <int>number</int>
+        <Double>number</Double>
+        <double>number</double>
+        <Boolean>checkbox</Boolean>
+        <Object>text</Object>
+    </type>
+
+    <cssContent>
+    form {
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f8f8f8;
+    }
+    
+    div {
+        margin-bottom: 15px;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    input {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+    
+    button {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #24587a;
+    }        
+                
+    </cssContent>
+
+    <utilsLogin>
+        const Login = () => {
+            const [username, setUsername] = useState('');
+            const [password, setPassword] = useState('');
+            const [message, setMessage] = useState('');
+            const [token, setToken] = useState('');
+            const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+            const handleLogin = async () => {
+                try {
+                    const response = await fetch('http://localhost:8080/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ username, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        setToken(data.token);
+                        setMessage(data.message);
+                        localStorage.setItem('token', data.token);
+                        window.location.href = "/liste";
+                    } else {
+                        setMessage(data.message);
+                    }
+                } catch (error) {
+                    console.error('Erreur lors de la connexion : ', error);
+                    setMessage('Une erreur s\'est produite lors de la connexion.');
+                }
+            };
+    </utilsLogin>
+    <handleLogout>
+        const handleLogout = () => {
+
+            setToken('');
+            setUsername('');
+            setPassword('');
+            setMessage('');
+        };
+    </handleLogout>
+
+
+    <formLogin>
+        return (
+             #DIV#
+                #H#Connexion #END_H#
+                 #DIV#
+                    #LABEL# htmlFor="username">Nom d'utilisateur :#END_LABEL#
+                   #INPUT#
+                        type="text"
+                        id="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    #END#
+                 #END_DIV#
+                 #DIV#
+                     #LABEL# htmlFor="password">Mot de passe : #END_LABEL#
+                     #INPUT#
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    #END#
+                #END_DIV#
+                 #BOUTON# onClick={handleLogin}>Se connecter #END_BOUTON#
+                {message #OR# <p>{message}</p>}
+             #END_DIV#
+        );
+    </formLogin>
+
+    <cssLogin>
+    .login-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+
+    .login-container h2 {
+        text-align: center;
+        color: #333;
+    }
+
+    .login-container label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .login-container button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .login-container button:hover {
+        background-color: #0056b3;
+    }
+
+    .login-container p {
+        margin-top: 10px;
+        color: #ff0000;
+    }
+
+    </cssLogin>
+
+</config>
+

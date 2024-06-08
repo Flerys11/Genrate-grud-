@@ -1,0 +1,14 @@
+import React, { useState, useEffect } from 'react';
+import './Login.css';
+
+#FETCH#
+
+#LOGOUT#
+
+#REDIRECT#
+
+#CONTENTES#
+
+};
+
+export default Login;
